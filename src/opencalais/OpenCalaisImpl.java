@@ -10,15 +10,14 @@ import java.rmi.server.RMIClientSocketFactory;
 import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 
-/**
- * Created by pooya_hy on 11/1/2018.
- */
 public class OpenCalaisImpl extends UnicastRemoteObject implements OpenCalais {
 
     public OpenCalaisImpl() throws Exception{}
 
     public String getTag(String text) throws Exception {
-        System.out.println(text);
+        try {
+
+
         URL url = new URL("https://api.thomsonreuters.com/permid/calais");
         URLConnection connection = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)connection;
@@ -42,6 +41,13 @@ public class OpenCalaisImpl extends UnicastRemoteObject implements OpenCalais {
         }
 
         System.out.println(content.toString());
-    return content.toString();
+        return content.toString();
+    }catch (Exception e){
+            System.out.println("====================================");
+            System.out.println("calais has an Exception");
+            System.out.println("====================================");
+            return null;
+        }
     }
+
 }

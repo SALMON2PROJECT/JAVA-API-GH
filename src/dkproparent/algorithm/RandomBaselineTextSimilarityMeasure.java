@@ -32,8 +32,7 @@ public class RandomBaselineTextSimilarityMeasure
 	extends TextSimilarityMeasureBase
 {
 	@Override
-	public double getSimilarity(Collection<String> aDocument1,
-			Collection<String> aDocument2)
+	public double getSimilarity(Collection<String> aDocument1, Collection<String> aDocument2)
 		throws SimilarityException
 	{
 		return Math.random();

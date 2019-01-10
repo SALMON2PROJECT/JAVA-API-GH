@@ -1,32 +1,49 @@
 package dkproparent;
 
+import dkproparent.algorithm.HashText;
 import dkproparent.algorithm.PdfContentExtractor;
-import dkproparent.algorithm.WordNGramJaccardMeasure;
-import dkpro.similarity.algorithms.api.TextSimilarityMeasure;
+
 import opencalais.OpenCalaisImpl;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.rmi.server.UnicastRemoteObject;
 
-/**
- * Created by pooya_hy on 11/1/2018.
- */
-public class DKProparentImpl extends UnicastRemoteObject implements DKProparent{
 
-    public DKProparentImpl() throws Exception{}
+public class DKProparentImpl extends UnicastRemoteObject implements DKProparent {
+
+    public DKProparentImpl() throws Exception {
+    }
+
     public String getText(String url) throws Exception {
-        PdfContentExtractor pdfx = new PdfContentExtractor() ;
-        OpenCalaisImpl openCalaisImpl=new OpenCalaisImpl();
 
-      return openCalaisImpl.getTag(pdfx.extractText(url));
-        //        String url = "http://www.better-fundraising-ideas.com/support-files/the-best-snail-jokes.pdf";
-/*
-        TextSimilarityMeasure measure = new WordNGramJaccardMeasure(1);    // Use word trigrams
+            PdfContentExtractor pdfx = new PdfContentExtractor();
 
-        String[] tokens1 = "Petrinets Process mining ".split("");
-        String[] tokens2 = "computation , mathematical modeling languages".split("");
+            OpenCalaisImpl openCalaisImpl = new OpenCalaisImpl();
+            String text = pdfx.extractText(url);
+            HashText hashText = new HashText();
+            String hashSHA = hashText.textHasher(text);
+            if ( !openCalaisImpl.getTag(text).equals(null)){
+            String tags = openCalaisImpl.getTag(text);
+            JSONObject jsonObject = new JSONObject(tags);
+            String docId = jsonObject.getJSONObject("doc").getJSONObject("info").getString("docId");
+            JSONObject jsonTags = new JSONObject();
+            String tagsName=" ";
+           try {
+               for (int i = 1; i < 11; i++) {
+                   tagsName = jsonObject.getJSONObject(docId + "/SocialTag/" + i).getString("name");
+                   jsonTags.put("tag" + i, tagsName);
+               }
+           }catch (JSONException e){
+            System.out.println("tags ended");
+        }
+            jsonTags.put("hashkey", hashSHA);
+            return jsonTags.toString();}
+            else {
+                return null;
+            }
 
-        double score = measure.getSimilarity(tokens1, tokens2);
-        System.out.println("Similarity: " + "%" + (score * 100));
-        return "Similarity: " + "%" + (score * 100);*/
+
     }
 }
