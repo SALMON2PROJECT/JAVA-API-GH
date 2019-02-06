@@ -31,14 +31,24 @@ public class DKProparentImpl extends UnicastRemoteObject implements DKProparent 
             JSONObject jsonTags = new JSONObject();
             String tagsName=" ";
            try {
+
+
                for (int i = 1; i < 11; i++) {
+
+
                    tagsName = jsonObject.getJSONObject(docId + "/SocialTag/" + i).getString("name");
+
                    jsonTags.put("tag" + i, tagsName);
+
+
                }
            }catch (JSONException e){
             System.out.println("tags ended");
         }
+
             jsonTags.put("hashkey", hashSHA);
+
+
             return jsonTags.toString();}
             else {
                 return null;

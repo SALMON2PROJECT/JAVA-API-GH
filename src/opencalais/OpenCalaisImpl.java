@@ -16,8 +16,6 @@ public class OpenCalaisImpl extends UnicastRemoteObject implements OpenCalais {
 
     public String getTag(String text) throws Exception {
         try {
-
-
         URL url = new URL("https://api.thomsonreuters.com/permid/calais");
         URLConnection connection = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)connection;
@@ -27,7 +25,6 @@ public class OpenCalaisImpl extends UnicastRemoteObject implements OpenCalais {
         http.setRequestProperty("Accept", "application/json");
         http.setRequestProperty("outputFormat", "application/json");
         http.setRequestProperty("Content-Type", "text/raw");
-
         DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
         wr.writeBytes(text);
 
@@ -39,7 +36,6 @@ public class OpenCalaisImpl extends UnicastRemoteObject implements OpenCalais {
             content.append(line);
             content.append(System.lineSeparator());
         }
-
         System.out.println(content.toString());
         return content.toString();
     }catch (Exception e){
