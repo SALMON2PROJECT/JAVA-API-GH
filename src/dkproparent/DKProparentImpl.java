@@ -4,10 +4,9 @@ import dkproparent.algorithm.HashText;
 import dkproparent.algorithm.PdfContentExtractor;
 
 import opencalais.OpenCalaisImpl;
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.rmi.server.UnicastRemoteObject;
 
 
@@ -46,7 +45,11 @@ public class DKProparentImpl extends UnicastRemoteObject implements DKProparent 
             System.out.println("tags ended");
         }
 
+
             jsonTags.put("hashkey", hashSHA);
+                System.out.println(jsonTags);
+            JSONObject content=new JSONObject(text);
+            jsonTags.put("txt",content.getString("txt"));
 
 
             return jsonTags.toString();}

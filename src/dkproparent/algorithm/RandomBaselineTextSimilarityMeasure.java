@@ -23,7 +23,6 @@ import dkpro.similarity.algorithms.api.TextSimilarityMeasureBase;
 import java.util.Collection;
 
 
-
 /**
  * A random baseline measure which returns random scores in a
  * [0,1[ interval.
@@ -32,7 +31,8 @@ public class RandomBaselineTextSimilarityMeasure
 	extends TextSimilarityMeasureBase
 {
 	@Override
-	public double getSimilarity(Collection<String> aDocument1, Collection<String> aDocument2)
+	public double getSimilarity(Collection<String> aDocument1,
+			Collection<String> aDocument2)
 		throws SimilarityException
 	{
 		return Math.random();
