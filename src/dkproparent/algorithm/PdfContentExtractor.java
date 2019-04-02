@@ -1,11 +1,11 @@
 package dkproparent.algorithm;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.json.JSONObject;
-
-import java.io.*;
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -32,7 +32,7 @@ public class PdfContentExtractor {
                          *  Title from manual metadata
                          **/
                         String title = info.getTitle();
-                       // System.out.println(title);
+                        // System.out.println(title);
                         System.out.println("* * * * * * * * * * * *\n");
                         /**
                          *  Key from manual metadata
@@ -44,12 +44,20 @@ public class PdfContentExtractor {
                          *  Text
                          **/
                         String text = pdfStripper.getText(document);
-                        String filteredText = text.substring(0, 6000);
+                        String filteredText = text.substring(0, 3500);
+
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            String ft = text.substring(3501, 7000);
+                            jsonObject.put("txt", ft);
+                        } catch (IndexOutOfBoundsException e) {
+
+                        }
                         System.out.println("* * * * * * * * * * * *\n");
-                        JSONObject jsonObject=new JSONObject();
+
                         /*jsonObject.put("words",keyWords);
                         jsonObject.put("title",title);*/
-                        jsonObject.put("txt",filteredText+keyWords+title);
+                        jsonObject.put("txt", filteredText + keyWords + title);
                         System.out.println("* * * * * * * * * * * *\n");
                         System.out.println(filteredText);
                         urlConnection.disconnect();
@@ -58,6 +66,7 @@ public class PdfContentExtractor {
                         document.close();
                         return jsonObject.toString();
                     } catch (Exception e) {
+                        e.printStackTrace();
                         System.out.println("PDFDocument or PDFTextStriper has exception");
                         return null;
                     }

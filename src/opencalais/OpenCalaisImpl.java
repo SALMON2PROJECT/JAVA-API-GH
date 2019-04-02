@@ -24,8 +24,7 @@ public class OpenCalaisImpl extends UnicastRemoteObject implements OpenCalais {
             HttpURLConnection http = (HttpURLConnection) connection;
             http.setDoOutput(true);
             http.setRequestMethod("POST");
-//            http.setRequestProperty("x-ag-access-token", "6PMN2W0VO5ytiAHGFimNXVHhwZRDnIgI");
-            http.setRequestProperty("x-ag-access-token", "n8QX26DfE57XvevlyqV9Cq01qccZPVAI");
+            http.setRequestProperty("x-ag-access-token", "6PMN2W0VO5ytiAHGFimNXVHhwZRDnIgI");
             http.setRequestProperty("Accept", "application/json");
             http.setRequestProperty("outputFormat", "application/json");
             http.setRequestProperty("Content-Type", "text/raw");
